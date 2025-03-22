@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
+import { Mail, Lock, Loader } from "lucide-react";
+import MotionButton from "../components/MotionButton";
 
 const LoginPage = () => {
     const MDiv = motion.div;
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-    const isLoading = false;
+    const { login, isLoading, error } = useAuthStore();
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
+        await login(email, password);
 	};
 
 	return (
@@ -49,15 +52,15 @@ const LoginPage = () => {
 						</Link>
 					</div>
 
-					<MDiv
-						whileHover={{ scale: 1.02 }}
-						whileTap={{ scale: 0.98 }}
-						className='w-full py-3 px-4 text-center bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200'
+                    {error && <p className='text-red-500 font-semibold mb-2'>{error}</p>}
+
+					<MotionButton
 						type='submit'
-                        disabled={isLoading}
+						disabled={isLoading}
+						className='w-full py-3 px-4 text-center bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200'
 					>
-						{isLoading ? <Loader className='w-6 h-6 animate-spin mx-auto' /> : "Login"}
-					</MDiv>
+						{isLoading ? <Loader className='w-6 h-6 animate-spin  mx-auto' /> : "Login"}
+                    </MotionButton>
 				</form>
 			</div>
 			<div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
@@ -71,4 +74,5 @@ const LoginPage = () => {
 		</MDiv>
 	);
 };
+
 export default LoginPage;

@@ -1,20 +1,30 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
-import { Lock, Mail, User } from "lucide-react";
-import { useState } from "react";
+import { useAuthStore } from "../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
+import { Loader, Lock, Mail, User } from "lucide-react";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 
 const SignUpPage = () => {
     const MDiv = motion.div;
+    const MButton = motion.button;
+    const navigate = useNavigate();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
+    const { signup, error, isLoading } = useAuthStore();
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
+		try {
+			await signup(email, password, name);
+			navigate("/verify-email");
+		} catch (error) {
+			console.log(error);
+		}
 	};
+
 	return (
 		<MDiv
 			initial={{ opacity: 0, y: 20 }}
@@ -34,6 +44,7 @@ const SignUpPage = () => {
 						type='text'
 						placeholder='Full Name'
 						value={name}
+						required
 						onChange={(e) => setName(e.target.value)}
 					/>
 					<Input
@@ -41,6 +52,7 @@ const SignUpPage = () => {
 						type='email'
 						placeholder='Email Address'
 						value={email}
+						required
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<Input
@@ -48,18 +60,22 @@ const SignUpPage = () => {
 						type='password'
 						placeholder='Password'
 						value={password}
+						required
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<PasswordStrengthMeter password={password} />
 
-					<MDiv
+                    {error && <p className='text-red-500 font-semibold mt-2'> { error } </p>}
+                    <PasswordStrengthMeter password={password} />
+
+					<MButton
 						className='mt-5 w-full py-3 px-4 text-center bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200'
 						whileHover={{ scale: 1.02 }}
 						whileTap={{ scale: 0.98 }}
 						type='submit'
+                        disabled={isLoading}
 					>
-                        Sign Up
-					</MDiv>
+						{isLoading ? <Loader className=' animate-spin mx-auto' size={24} /> : "Sign Up"}
+                    </MButton>
 				</form>
 			</div>
 			<div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
@@ -73,4 +89,5 @@ const SignUpPage = () => {
 		</MDiv>
 	);
 };
+
 export default SignUpPage;
