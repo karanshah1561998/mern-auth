@@ -80,6 +80,6 @@ export const login = (req, res) => {
 };
 
 export const logout = (req, res) => {
-    res.send("logout route");
+    res.clearCookie("jwt");
+	res.status(200).json({ success: true, message: "Logged out successfully" });
 };
-
