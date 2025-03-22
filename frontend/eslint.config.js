@@ -23,6 +23,7 @@ export default [
     rules: {
       "react/prop-types": "off",
       "react/jsx-no-target-blank": "off",
+      "react/no-unescaped-entities": "off",
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
 
