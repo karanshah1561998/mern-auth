@@ -11,10 +11,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+const allowedOrigins = [
+	process.env.NODE_ENV === "development"
+		? "http://localhost:5173"
+		: "https://mern-auth-ysso.onrender.com",
+];
+
+app.use(
+	cors({
+		origin: allowedOrigins,
+		credentials: true,
+	})
+);
 
 app.use(express.json());
 app.use(cookieParser());
