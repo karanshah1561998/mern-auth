@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Input from "../components/Input";
 import MotionButton from "../components/MotionButton";
-
+import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 
 const ResetPasswordPage = () => {
     const MDiv = motion.div;
@@ -70,6 +70,8 @@ const ResetPasswordPage = () => {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
+
+					<PasswordStrengthMeter password={password} />
 
 					<MotionButton
                         type='submit'
