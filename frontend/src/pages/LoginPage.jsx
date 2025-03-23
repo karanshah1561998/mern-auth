@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import { useState, useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Mail, Lock, Loader } from "lucide-react";
 import MotionButton from "../components/MotionButton";
@@ -10,12 +10,16 @@ const LoginPage = () => {
     const MDiv = motion.div;
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-    const { login, isLoading, error } = useAuthStore();
+    const { login, isLoading, error, clearError } = useAuthStore();
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
         await login(email, password);
 	};
+
+	useEffect(() => {
+		clearError();
+	}, []);
 
 	return (
 		<MDiv

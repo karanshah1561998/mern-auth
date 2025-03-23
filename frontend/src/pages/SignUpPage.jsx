@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
+import { useState, useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader, Lock, Mail, User } from "lucide-react";
@@ -13,7 +13,7 @@ const SignUpPage = () => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-    const { signup, error, isLoading } = useAuthStore();
+    const { signup, error, isLoading, clearError } = useAuthStore();
 
 	const handleSignUp = async (e) => {
 		e.preventDefault();
@@ -24,6 +24,10 @@ const SignUpPage = () => {
 			console.log(error);
 		}
 	};
+
+	useEffect(() => {
+		clearError();
+	}, []);
 
 	return (
 		<MDiv
