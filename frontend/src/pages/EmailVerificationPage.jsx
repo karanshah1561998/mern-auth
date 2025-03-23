@@ -74,7 +74,7 @@ const EmailVerificationPage = () => {
 				<h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 to-blue-500 text-transparent bg-clip-text'>
 					Verify Your Email
 				</h2>
-				<p className='text-center text-gray-300 mb-6'>Enter the 6-digit code sent to your email address.</p>
+				<p className='text-center mb-6'>Enter the 6-digit code sent to your email address.</p>
 
 				<form onSubmit={handleSubmit} className='space-y-6'>
 					<div className='flex justify-between'>
