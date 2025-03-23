@@ -64,7 +64,7 @@ const EmailVerificationPage = () => {
 	}, [code]);
 
 	return (
-		<div className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
+		<div className='max-w-md w-full bg-white bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'>
 			<MDiv
 				initial={{ opacity: 0, y: -50 }}
 				animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ const EmailVerificationPage = () => {
 								value={digit}
 								onChange={(e) => handleChange(index, e.target.value)}
 								onKeyDown={(e) => handleKeyDown(index, e)}
-								className='w-12 h-12 text-center text-2xl font-bold bg-gray-700 text-white border-2 border-gray-600 rounded-lg focus:border-blue-500 focus:outline-none'
+								className='w-12 h-12 text-center text-2xl font-bol border-2 border-gray-600 rounded-lg focus:border-blue-500 focus:outline-none'
 							/>
 						))}
 					</div>
