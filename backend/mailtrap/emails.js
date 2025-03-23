@@ -64,7 +64,7 @@ export const sendWelcomeEmail = async (email, name) => {
 export const sendPasswordResetEmail = async (email, resetURL) => {
 	try {
 	  const response = await axios.post(
-		"https://send.api.mailtrap.io/api/send",
+		"https://send.api.mailtrap.io/api/messages",
 		{
 		  from: sender,
 		  to: [{ email }],
