@@ -1,5 +1,6 @@
 import { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./emailTemplate.js";
 import { mailTrapClient, sender } from "./mailtrap.config.js";
+import axios from "axios";
 
 export const sendVerificationEmail = async (email, verificationToken) => {
     const recipient = [{ email }];
@@ -40,25 +41,52 @@ export const sendWelcomeEmail = async (email, name) => {
 	}
 };
 
+// export const sendPasswordResetEmail = async (email, resetURL) => {
+// 	const recipient = [{ email }];
+
+// 	try {
+// 		const response = await mailTrapClient.send({
+// 			from: sender,
+// 			to: recipient,
+// 			subject: "Reset your password",
+// 			html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
+// 			category: "Password Reset",
+// 			message_type: "transactional",
+// 		});
+
+//         console.log("Password reset email sent successfully: ", response);
+// 	} catch (error) {
+// 		console.error(`Error sending password reset email: `, error);
+// 		throw new Error(`Error sending password reset email: ${error}`);
+// 	}
+// };
+
 export const sendPasswordResetEmail = async (email, resetURL) => {
-	const recipient = [{ email }];
-
 	try {
-		const response = await mailTrapClient.send({
-			from: sender,
-			to: recipient,
-			subject: "Reset your password",
-			html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
-			category: "Password Reset",
-			message_type: "transactional",
-		});
+	  const response = await axios.post(
+		"https://send.api.mailtrap.io/api/send",
+		{
+		  from: sender,
+		  to: [{ email }],
+		  subject: "Reset your password",
+		  html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
+		  category: "Password Reset",
+		  message_type: "transactional"
+		},
+		{
+		  headers: {
+			Authorization: `Bearer ${process.env.MAILTRAP_TOKEN}`,
+			"Content-Type": "application/json"
+		  }
+		}
+	  );
 
-        console.log("Password reset email sent successfully: ", response);
+	  console.log("Password reset email sent successfully:", response.data);
 	} catch (error) {
-		console.error(`Error sending password reset email: `, error);
-		throw new Error(`Error sending password reset email: ${error}`);
+	  console.error("Mailtrap API error:", error.response?.data || error.message);
+	  throw new Error("Failed to send password reset email");
 	}
-};
+  };
 
 export const sendResetSuccessEmail = async (email) => {
 	const recipient = [{ email }];
