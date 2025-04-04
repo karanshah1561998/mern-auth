@@ -45,7 +45,7 @@ Access the live app here: [MERN Auth](https://mern-auth-ysso.onrender.com)
    npm install
 
 3. **Set up environment variables:**
-   Create a `.env` file in the friendsync/backend directory and add:
+   Create a `.env` file in the mern-auth/backend directory and add:
    ```bash
    PORT = 3000
    NODE_ENV = development
