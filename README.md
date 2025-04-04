@@ -64,6 +64,7 @@ Access the live app here: [MERN Auth](https://mern-auth-ysso.onrender.com)
    cd friendsync/frontend
    npm run dev
 
+   Open http://localhost:5173 to view the app in your browser.
 
 ## 📩 Email Functionality (Mailtrap Setup)
 - Domain: `karanshah.dev` (Verified with Mailtrap)
